@@ -6,6 +6,7 @@ from datetime import datetime
 import requests
 import pandas as pd
 import time
+import sys
 import os
 
 
@@ -59,8 +60,8 @@ def save_to_xlsx(articles):
     ws = wb.active
     for r in dataframe_to_rows(df, index=True, header=True):
         ws.append(r)
-    os.makedirs('./output', exist_ok=True)
-    wb.save(f"./output/output.xlsx")
+    os.makedirs(f'{sys.path[0]}/output', exist_ok=True)
+    wb.save(f"{sys.path[0]}/output/output.xlsx")
 
 
 def main():

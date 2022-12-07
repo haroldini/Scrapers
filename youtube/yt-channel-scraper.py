@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 
 import os
+import sys
 import time
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -86,7 +87,7 @@ def get_video_details(video):
 def get_videos_details(driver):
     videos = driver.find_elements(By.XPATH, '//*[@id="content"]')[1:-1]
     videos_details = []
-    for video in videos:  
+    for video in tqdm(videos):  
         video_details = get_video_details(video)
         videos_details.append(video_details)
     return videos_details
@@ -98,8 +99,8 @@ def save_to_xlsx(videos_details, filename):
     ws = wb.active
     for r in dataframe_to_rows(df, index=True, header=True):
         ws.append(r)
-    os.makedirs('./output', exist_ok=True)
-    wb.save(f"./output/{filename}.xlsx")
+    os.makedirs(f"{sys.path[0]}/output", exist_ok=True)
+    wb.save(f"{sys.path[0]}/output/{filename}.xlsx")
 
 def main():
     print("Enter channel username:")
